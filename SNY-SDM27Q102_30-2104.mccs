@@ -1,0 +1,329 @@
+# Sony INZONE M10S II (SDM-27Q102) complete ddcutil UDF
+#
+# Target EDID observed on hardware:
+#   MFG_ID       SNY
+#   MODEL        SDM27Q102*30
+#   PRODUCT_CODE 2104
+#
+# Source of feature definitions:
+#   Sony INZONE Hub 1.0.19.0, INZONEHub.dll
+#   PCWidget.Communication.MonitorDeviceConfig.SDM_27Q102Info
+#   54/54 model-specific VCP entries recovered from managed IL.
+#
+# Hardware-confirmed raw values on SDM-27Q102:
+#   xFE=x01 -> 540 Hz
+#   xFE=x02 -> 720 Hz (HD)
+#   xFF=x01 -> 24.5-inch Center
+#   x51=x10 -> 2368x1332 pixel-by-pixel
+#   xE5=x01 -> Adaptive-Sync/VRR On
+#   x4F=x00 -> Anti-VRR Flicker Off
+#
+# MCCS_VERSION 2.2 below is an interpretation override for ddcutil.
+# The monitor's VCP-version query is non-standard/undetected by ddcutil;
+# this line is not a claim that the monitor itself advertises MCCS 2.2.
+#
+# WARNING: Features marked DANGEROUS / MAINTENANCE below are write-only.
+# Do not issue setvcp to them casually. Panel Refresh in particular should
+# not be run as a test operation.
+
+MFG_ID       SNY
+MODEL        SDM27Q102*30
+PRODUCT_CODE 2104
+MCCS_VERSION 2.2
+
+# ---- Gaming assist -------------------------------------------------------
+
+FEATURE_CODE xE5 Adaptive-Sync/VRR
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 On
+
+FEATURE_CODE xE4 Frame Rate Counter
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 On
+
+FEATURE_CODE xE2 Crosshair
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 Cursor 1
+  VALUE x02 Cursor 2
+  VALUE x03 Cursor 3
+  VALUE x04 Cursor 4
+  VALUE x05 Cursor 5
+  VALUE x06 Cursor 6
+  VALUE x07 Cursor 7
+  VALUE x08 Cursor 8
+
+FEATURE_CODE xE3 Timer
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 10 minutes
+  VALUE x02 20 minutes
+  VALUE x03 30 minutes
+  VALUE x04 40 minutes
+  VALUE x05 50 minutes
+  VALUE x06 60 minutes
+
+FEATURE_CODE x4D Low Latency
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 On
+
+FEATURE_CODE x4F Anti-VRR Flicker
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 Mid
+  VALUE x02 High
+  VALUE x03 Extreme
+
+FEATURE_CODE xFE Maximum Frame Rate / Overclock
+  ATTRS NC RW
+  VALUE x00 Overclock Off / base mode
+  VALUE x01 540 Hz
+  VALUE x02 720 Hz (HD)
+
+FEATURE_CODE xFF 24.5-inch Mode
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 Center
+  VALUE x02 Bottom
+
+FEATURE_CODE x51 24.5-inch Resolution
+  ATTRS NC RW
+  VALUE x10 2368x1332 pixel-by-pixel
+  VALUE x11 1920x1080
+
+FEATURE_CODE xE6 Motion Blur Reduction
+  ATTRS NC RW
+  VALUE x10 Off
+  VALUE x11 On
+
+# DANGEROUS: write-only reset command.
+FEATURE_CODE x06 Gaming Assist Reset
+  ATTRS NC WO
+  VALUE x01 Execute
+
+# ---- Picture / preset ----------------------------------------------------
+
+FEATURE_CODE xE0 Preset Mode
+  ATTRS NC RW
+  VALUE x08 FPS Pro+
+  VALUE x01 FPS Pro
+  VALUE x05 MOBA/RTS
+  VALUE x02 Cinema
+  VALUE x03 Custom 1
+  VALUE x0B Custom 3
+  VALUE x00 Standard
+  VALUE x0A sRGB
+  VALUE x13 DisplayHDR
+  VALUE x11 Cinema HDR
+  VALUE x12 Game HDR
+  VALUE x15 Custom HDR
+  VALUE x14 RPG HDR
+
+FEATURE_CODE xE1 Auto Picture Mode
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 On
+
+FEATURE_CODE x10 Brightness
+  ATTRS C RW
+
+FEATURE_CODE x4E Brightness Stabilizer
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 Mid
+  VALUE x02 High
+
+FEATURE_CODE x12 Contrast
+  ATTRS C RW
+
+FEATURE_CODE x8C Sharpness
+  ATTRS C RW
+
+FEATURE_CODE x72 Gamma
+  ATTRS NC RW
+  VALUE x00 1.8
+  VALUE x01 2.0
+  VALUE x02 2.2
+  VALUE x03 2.4
+  VALUE x04 2.6
+  VALUE x05 S-curve
+
+FEATURE_CODE x92 Black Equalizer
+  ATTRS C RW
+
+FEATURE_CODE x86 Aspect Ratio
+  ATTRS NC RW
+  VALUE x00 16:9
+  VALUE x01 Auto resize
+  VALUE x03 Original
+
+FEATURE_CODE x14 Color Temperature
+  ATTRS NC RW
+  VALUE x02 Neutral
+  VALUE x03 Warm
+  VALUE x0A Cool
+  VALUE x0B Custom
+
+FEATURE_CODE x16 Color Temperature - Red
+  ATTRS C RW
+
+FEATURE_CODE x18 Color Temperature - Green
+  ATTRS C RW
+
+FEATURE_CODE x1A Color Temperature - Blue
+  ATTRS C RW
+
+FEATURE_CODE x8A Saturation
+  ATTRS C RW
+
+FEATURE_CODE x90 Hue
+  ATTRS C RW
+
+FEATURE_CODE x59 Six Color - Red
+  ATTRS C RW
+
+FEATURE_CODE x5B Six Color - Green
+  ATTRS C RW
+
+FEATURE_CODE x5D Six Color - Blue
+  ATTRS C RW
+
+FEATURE_CODE x5C Six Color - Cyan
+  ATTRS C RW
+
+FEATURE_CODE x5E Six Color - Yellow
+  ATTRS C RW
+
+FEATURE_CODE x5A Six Color - Magenta
+  ATTRS C RW
+
+# DANGEROUS: write-only reset command.
+FEATURE_CODE x05 Picture Adjustment Reset
+  ATTRS NC WO
+  VALUE x01 Execute
+
+# ---- Input / link --------------------------------------------------------
+
+FEATURE_CODE x60 Input Source
+  ATTRS NC RW
+  VALUE x11 HDMI 1
+  VALUE x12 HDMI 2
+  VALUE x0F DisplayPort
+
+FEATURE_CODE xEB Auto Input Switch
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 On
+
+FEATURE_CODE xEC Control for HDMI
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 On
+
+FEATURE_CODE xED DisplayPort Version
+  ATTRS NC RW
+  VALUE x01 DP 1.2
+  VALUE x02 DP 1.4
+  VALUE x03 DP 2.1
+
+# ---- OSD / accessibility / system ---------------------------------------
+
+FEATURE_CODE xF3 DDC/CI
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 On
+
+FEATURE_CODE xE7 Power Saving
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 On
+
+FEATURE_CODE xF2 Power LED
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 On
+
+FEATURE_CODE xF1 Screen Reader
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 On
+
+FEATURE_CODE xF5 Text Magnification
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 On
+
+FEATURE_CODE xCC Language
+  ATTRS NC RW
+  VALUE x02 English
+  VALUE x03 French
+  VALUE x0A Spanish
+  VALUE x04 German
+  VALUE x05 Italian
+  VALUE x08 Portuguese
+  VALUE x14 Dutch
+  VALUE x0B Swedish
+  VALUE x16 Finnish
+  VALUE x1E Polish
+  VALUE x0C Turkish
+  VALUE x09 Russian
+  VALUE x0D Chinese Simplified
+  VALUE x01 Chinese Traditional
+  VALUE x06 Japanese
+  VALUE x07 Korean
+
+FEATURE_CODE xEF OSD Timeout
+  ATTRS C RW
+
+FEATURE_CODE xEE OSD Transparency
+  ATTRS C RW
+
+FEATURE_CODE xC9 Software Version
+  ATTRS C RO
+
+# DANGEROUS: write-only factory reset.
+FEATURE_CODE x04 Factory Reset
+  ATTRS NC WO
+  VALUE x01 Execute
+
+# ---- Audio ---------------------------------------------------------------
+
+# Present in Sony's SDM_27Q102Info table. The M10S II has no built-in
+# speaker, so this feature may be inert depending on firmware/input state.
+FEATURE_CODE x62 Speaker Volume
+  ATTRS C RW
+
+FEATURE_CODE x64 Headphone Volume
+  ATTRS C RW
+
+# ---- OLED panel protection / maintenance --------------------------------
+
+FEATURE_CODE xFB Screen Saver
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 On
+
+FEATURE_CODE xFD Pixel Shift
+  ATTRS NC RW
+  VALUE x00 Off
+  VALUE x01 Low
+  VALUE x02 Mid
+  VALUE x03 High
+
+# MAINTENANCE / DANGEROUS: write-only operation.
+FEATURE_CODE xF0 Pixel Refresh
+  ATTRS NC WO
+  VALUE x01 Execute
+
+# MAINTENANCE / DANGEROUS: write-only operation. Do not use for testing.
+FEATURE_CODE xF8 Panel Refresh
+  ATTRS NC WO
+  VALUE x01 Execute
+
+# MAINTENANCE / DANGEROUS: initiates the monitor USB software-update path.
+FEATURE_CODE xF4 USB Software Update
+  ATTRS NC WO
+  VALUE x01 Execute
