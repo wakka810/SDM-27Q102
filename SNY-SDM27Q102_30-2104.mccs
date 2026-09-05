@@ -5,10 +5,22 @@
 #   MODEL        SDM27Q102*30
 #   PRODUCT_CODE 2104
 #
-# Source of feature definitions:
-#   Sony INZONE Hub 1.0.19.0, INZONEHub.dll
+# Source of private feature definitions:
+#   Sony INZONE Hub 1.0.19.0 (released 2026-04-15), INZONEHub.dll
 #   PCWidget.Communication.MonitorDeviceConfig.SDM_27Q102Info
 #   54/54 model-specific VCP entries recovered from managed IL.
+#   The 54 VCP code values in this file match that table exactly.
+#
+# Latest firmware cross-check:
+#   Sony SDM-27Q102 firmware M004 (released 2026-08-18)
+#   SDM-27Q102.bin: 2,809,244 bytes
+#   SHA-256: bcef74b7a9b9b6415619411c62afd843714c32edcefeb4d59a557452e9c4a729
+#   Image version header: "M004" at file offset 0x4119A
+#   Main image build stamp: "Aug  3 2026" / "17:55:08"
+#   Embedded capability string reports mccs_ver(2.1).
+#   The capability string is byte-identical in M003 and M004.
+#   Sony's private xE0/xFE/etc. VCP entries are not enumerated by that native
+#   capability string, so those definitions remain sourced from INZONE Hub.
 #
 # Hardware-confirmed raw values on SDM-27Q102:
 #   xFE=x01 -> 540 Hz
@@ -18,9 +30,9 @@
 #   xE5=x01 -> Adaptive-Sync/VRR On
 #   x4F=x00 -> Anti-VRR Flicker Off
 #
-# MCCS_VERSION 2.2 below is an interpretation override for ddcutil.
-# The monitor's VCP-version query is non-standard/undetected by ddcutil;
-# this line is not a claim that the monitor itself advertises MCCS 2.2.
+# MCCS_VERSION 2.1 below matches the capability string embedded in M004.
+# The monitor's xDF VCP-version query can be non-standard/undetected by
+# ddcutil, so the UDF supplies the firmware-declared version explicitly.
 #
 # WARNING: Features marked DANGEROUS / MAINTENANCE below are write-only.
 # Do not issue setvcp to them casually. Panel Refresh in particular should
@@ -29,7 +41,7 @@
 MFG_ID       SNY
 MODEL        SDM27Q102*30
 PRODUCT_CODE 2104
-MCCS_VERSION 2.2
+MCCS_VERSION 2.1
 
 # ---- Gaming assist -------------------------------------------------------
 
@@ -281,6 +293,9 @@ FEATURE_CODE xEF OSD Timeout
 FEATURE_CODE xEE OSD Transparency
   ATTRS C RW
 
+# M004 is present in the firmware image metadata. That does not by itself
+# establish the wire encoding returned by VCP xC9, so no VALUE mapping is
+# inferred here.
 FEATURE_CODE xC9 Software Version
   ATTRS C RO
 
